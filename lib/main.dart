@@ -27,19 +27,50 @@ import 'package:flutter/material.dart';
 //   ));
 // }
 
+// void main() {
+//   runApp(MaterialApp(
+//     title: "Exploring UI Widget",
+//     home: Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Basic List View"),
+//       ),
+//       body: getBasicListView(),
+//     ),
+//   ));
+// }
+
 void main() {
   runApp(MaterialApp(
     title: "Exploring UI Widget",
     home: Scaffold(
-      appBar: AppBar(
-        title: const Text("Basic List View"),
-      ),
-      body: getListView(),
-    ),
+        appBar: AppBar(
+          title: const Text("Basic List View"),
+        ),
+        body: getListView(),
+  ),
   ));
 }
 
+List<String> getListItems() {
+  return List<String>.generate(1000, (index) => "Item $index");
+}
+
 Widget getListView() {
+  var listItems = getListItems();
+  return ListView.builder(itemBuilder: (context, index) {
+    return ListTile(
+      title: Text(listItems[index]),
+      subtitle: const Text("This is secondary item"),
+      leading: const Icon(Icons.accessibility),
+      onTap: () {
+        debugPrint("${listItems[index]} is tapped");
+      },
+      trailing: const Icon(Icons.arrow_right),
+    );
+  });
+}
+
+Widget getBasicListView() {
   var listView = ListView(
     children: <Widget>[
       ListTile(
