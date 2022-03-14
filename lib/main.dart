@@ -31,6 +31,9 @@ void main() {
   runApp(MaterialApp(
     title: "Exploring UI Widget",
     home: Scaffold(
+      appBar: AppBar(
+        title: const Text("Basic List View"),
+      ),
       body: getListView(),
     ),
   ));
