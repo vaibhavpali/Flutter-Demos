@@ -43,12 +43,32 @@ void main() {
   runApp(MaterialApp(
     title: "Exploring UI Widget",
     home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Basic List View"),
-        ),
-        body: getListView(),
-  ),
+      appBar: AppBar(
+        title: const Text("Basic List View"),
+      ),
+      body: getListView(),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Add the item',
+        child: const Icon(Icons.add),
+        onPressed: () {
+          debugPrint("FAB clicked");
+        },
+      ),
+    ),
   ));
+}
+
+void showSnackbar(BuildContext context, String item) {
+  var snackBar = SnackBar(
+    content: Text("You just clicked $item"),
+    action: SnackBarAction(
+      label: "UNDO",
+      onPressed: () {
+        debugPrint("Undo operation performed");
+      },
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
 List<String> getListItems() {
@@ -63,7 +83,7 @@ Widget getListView() {
       subtitle: const Text("This is secondary item"),
       leading: const Icon(Icons.accessibility),
       onTap: () {
-        debugPrint("${listItems[index]} is tapped");
+        showSnackbar(context, listItems[index]);
       },
       trailing: const Icon(Icons.arrow_right),
     );
