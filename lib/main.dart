@@ -1,116 +1,46 @@
 import 'package:flutter/material.dart';
 
-// void main() => runApp(const MyFlutterApp());
-
-// class MyFlutterApp extends StatelessWidget {
-//   const MyFlutterApp({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         debugShowCheckedModeBanner: false,
-//         title: "My flutter App",
-//         home: Scaffold(
-//           appBar: AppBar(
-//             title: const Text("My Flutter"),
-//             backgroundColor: Colors.orange,
-//           ),
-//           body: const FirstScreen()
-//         ));
-//   }
-// }
-
-// void main() {
-//   runApp(const MaterialApp(
-//     title: "Exploring UI Widget",
-//     home: RowColumn(),
-//   ));
-// }
-
-// void main() {
-//   runApp(MaterialApp(
-//     title: "Exploring UI Widget",
-//     home: Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Basic List View"),
-//       ),
-//       body: getBasicListView(),
-//     ),
-//   ));
-// }
-
 void main() {
   runApp(MaterialApp(
-    title: "Exploring UI Widget",
-    home: Scaffold(
-      appBar: AppBar(
-        title: const Text("Basic List View"),
-      ),
-      body: getListView(),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Add the item',
-        child: const Icon(Icons.add),
-        onPressed: () {
-          debugPrint("FAB clicked");
-        },
-      ),
-    ),
+    title: "Stateful App Example",
+    home: FavoriteCity(),
   ));
 }
 
-void showSnackbar(BuildContext context, String item) {
-  var snackBar = SnackBar(
-    content: Text("You just clicked $item"),
-    action: SnackBarAction(
-      label: "UNDO",
-      onPressed: () {
-        debugPrint("Undo operation performed");
-      },
-    ),
-  );
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+class FavoriteCity extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _FavoriteCityState();
+  }
 }
 
-List<String> getListItems() {
-  return List<String>.generate(1000, (index) => "Item $index");
-}
+class _FavoriteCityState extends State<FavoriteCity> {
+  String nameCity = "";
 
-Widget getListView() {
-  var listItems = getListItems();
-  return ListView.builder(itemBuilder: (context, index) {
-    return ListTile(
-      title: Text(listItems[index]),
-      subtitle: const Text("This is secondary item"),
-      leading: const Icon(Icons.accessibility),
-      onTap: () {
-        showSnackbar(context, listItems[index]);
-      },
-      trailing: const Icon(Icons.arrow_right),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Stateful App Widget"),
+      ),
+      body: Container(
+        margin: const EdgeInsets.all(20.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              onChanged: (String inputValue) {
+                setState(() {
+                  nameCity = inputValue;
+                });
+              },
+            ),
+            Padding(
+             padding: const EdgeInsets.all(40.0),
+             child: Text("Your best city is $nameCity"), 
+            )
+          ],
+        ),
+      ),
     );
-  });
-}
-
-Widget getBasicListView() {
-  var listView = ListView(
-    children: <Widget>[
-      ListTile(
-        leading: const Icon(Icons.landscape),
-        title: const Text("Landscape"),
-        subtitle: const Text("It's a beautiful view"),
-        trailing: const Icon(Icons.sunny),
-        onTap: () => debugPrint("Icon landscape clicked"),
-      ),
-      const ListTile(
-        leading: Icon(Icons.phone),
-        title: Text("My Phone"),
-        subtitle: Text("It's a nice phone"),
-      ),
-      const ListTile(
-        leading: Icon(Icons.email),
-        title: Text("My email"),
-        subtitle: Text("It's vaibhav@techno.com"),
-      )
-    ],
-  );
-  return listView;
+  }
 }
